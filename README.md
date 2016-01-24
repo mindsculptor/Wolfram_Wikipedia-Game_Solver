@@ -7,6 +7,9 @@ https://www.wolframcloud.com/objects/6b9f1adb-2e8d-4021-b552-1ef85b3f4fa7
 Setup:
   1. Input Wikipedia address 1 in the first term. (*Starting link*)
   2. Input Wikipedia address 2 in the second term. (*Ending Link*)
+
+Run:
   3. Click SHIFT + ENTER to run.
-  4. Solution will be displayed on the bottom.
+  4. Wait for a few seconds to a minute for the algorithm to be processed.
+  5. Solution will be displayed on the bottom.
   
