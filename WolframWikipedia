@@ -1,0 +1,40 @@
+(* Wolfram-Wikipedia-Game-Solver *)
+(* Authors: Joshua, Mark, Derek, Johanes *)
+(* HackArizona 2016 *)
+link1 = "https://en.wikipedia.org/wiki/Hackathon"; (*Starting link*)
+
+link2 =  "https://en.wikipedia.org/wiki/University_of_Arizona"; (*Ending Link*)
+
+i = 0;(*Loop counter*)
+
+link0 = {}; (*List containing next hyperlink in jth position. 1 for Nearest, the middle if that fails *)
+
+j = 0; (*location of next link*)
+
+listfor = {} ;(*list of sites in forward direction*)
+listback = {}; (*backward direction*)
+
+AppendTo[listfor, link1];(*Adds start to list*)
+While[link1    != link2 &&  i < 200, (*While not equal or not taking forever.*)
+link0 = Nearest[Import[link1, "Hyperlinks"], link2, 10];
+j = 1;
+While[j <Length[link0] && (ContainsAny[listfor, {link0[[j]]} ]||ContainsAny[listback, {link0[[j]]} ] || StringContainsQ[StringDrop[link0[[j]], 7], ":"] ||StringContainsQ[link0[[j]], "edit"] ||StringContainsQ[link0[[j]], "Main_Page"] || StringTake[link0[[j]], {9, 10}]       != "en" ||StringContainsQ[link0[[j]], "php"] ||StringContainsQ[link0[[j]], "htm"] || StringContainsQ[link0[[j]], ".asp"]),
+(*If a link we don't want, jump to middle of list of hyperlinks and move until we get something good*)
+  j ++];
+ If[j >= Length[link0],
+ link0 = Import[link1, "Hyperlinks"];
+ j = Round[Length[link0]/2];
+];
+ 
+ 
+  link1 = link2;
+  link2 = link0[[j]];
+ If[IntegerPart[i /2] == i / 2, (*if i even, adds to one listside, odd the other*) (*To print string*)
+  AppendTo[listback, link1],
+  AppendTo[listfor, link1]] ; 
+   i = i + 1];
+If[link1 == link2, Print[StringJoin["Success ",ToString[i + 1]]], Print["Maybe extend it."]];
+list = Join[listfor, Reverse[listback]];(*combine the lists*)
+For[i = 1, i <= Length[list], i++,
+Print[StringDrop[list[[i]],30]]]
+
